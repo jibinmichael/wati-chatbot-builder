@@ -54,7 +54,7 @@ export function NodePanel() {
   const [channel, setChannel] = useState<Channel>("whatsapp")
 
   return (
-    <aside className="flex h-full w-80 flex-col border-r border-slate-200 bg-white">
+    <aside className="flex h-full min-h-0 w-80 flex-col border-r border-slate-200">
       <div className="p-4">
         <div className="flex h-8 flex-row gap-1 rounded-md bg-slate-100 p-1">
           {channels.map((c) => (
@@ -78,7 +78,7 @@ export function NodePanel() {
         </div>
       </div>
 
-      <div className="flex-1 space-y-6 overflow-y-auto px-4 py-4">
+      <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-4 py-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {categories.map((cat) => (
           <div key={cat.title}>
             <h3 className="mb-3 text-xs font-medium text-slate-500">{cat.title}</h3>

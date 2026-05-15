@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import { ChevronDown, ChevronLeft, Play } from "lucide-react"
 
-export function BotHeader() {
+export function BotHeader({
+  showJourney,
+  onJourneyChange,
+}: {
+  showJourney: boolean
+  onJourneyChange: (v: boolean) => void
+}) {
   const [name, setName] = useState("Lead qualification bot 2026")
   const committedRef = useRef(name)
   const [showSaved, setShowSaved] = useState(false)
@@ -41,13 +47,13 @@ export function BotHeader() {
         <ChevronLeft size={12} />
         Exit
       </button>
-      <div className="flex max-w-md min-w-0 shrink items-center gap-2">
+      <div className="flex max-w-[400px] shrink-0 items-center gap-2">
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           onBlur={commitIfChanged}
-          className="min-w-0 flex-1 border-none bg-transparent px-2 py-0.5 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-50 focus:bg-transparent focus:outline-none focus:ring-0 focus:hover:bg-transparent"
+          className="field-sizing-content max-w-[400px] truncate border-none bg-transparent px-2 py-0.5 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-50 focus:bg-transparent focus:outline-none focus:ring-0 focus:hover:bg-transparent"
           aria-label="Bot name"
         />
         {showSaved ? (
@@ -56,6 +62,20 @@ export function BotHeader() {
       </div>
       <div className="min-w-0 flex-1" />
       <div className="flex shrink-0 items-center gap-2">
+        <label className="inline-flex h-6 cursor-pointer items-center gap-1.5">
+          <span className="relative inline-flex h-3 w-5 shrink-0">
+            <input
+              type="checkbox"
+              role="switch"
+              checked={showJourney}
+              onChange={(e) => onJourneyChange(e.target.checked)}
+              className="peer sr-only"
+            />
+            <span className="absolute inset-0 rounded-full bg-slate-200 transition-colors peer-checked:bg-[#1FB97D]" />
+            <span className="absolute top-0.5 left-0.5 h-2 w-2 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-2" />
+          </span>
+          <span className="text-xs font-medium text-slate-600">Show journey</span>
+        </label>
         <button
           type="button"
           className="inline-flex h-6 items-center gap-1 rounded-full border border-slate-200 bg-white px-2 text-xs text-slate-600 hover:bg-slate-50"
