@@ -109,7 +109,7 @@ export function SessionLogsDrawer({
 
       <aside
         className={cn(
-          "absolute right-0 top-0 bottom-0 z-10 flex w-[560px] flex-col border-l border-slate-200 bg-white shadow-[-8px_0_24px_rgba(15,15,15,0.04)] transition-transform duration-200 ease-out",
+          "absolute right-0 top-0 bottom-0 z-10 flex w-[560px] flex-col bg-white shadow-[-8px_0_24px_rgba(15,15,15,0.04)] transition-transform duration-200 ease-out",
           open ? "translate-x-0" : "translate-x-full",
         )}
         aria-hidden={!open}

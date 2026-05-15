@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import {
   MiniMap,
   ReactFlow,
@@ -393,43 +393,17 @@ const initialEdges: Edge[] = [
   },
 ]
 
-export function Canvas({
-  showJourney,
-  panelCollapsed,
-  onTogglePanel,
-  selectedNodeId,
-  onNodeSelect,
-  onPaneClick,
-}: {
-  showJourney: boolean
-  panelCollapsed: boolean
-  onTogglePanel: () => void
-  selectedNodeId: string | null
-  onNodeSelect: (p: { id: string; body: string; type: string }) => void
-  onPaneClick: () => void
-}) {
+export function Canvas({ showJourney }: { showJourney: boolean }) {
   const [nodes, , onNodesChange] = useNodesState(initialNodes)
   const [isPanning, setIsPanning] = useState(false)
 
-  const displayNodes = useMemo(
-    () =>
-      nodes.map((n) => ({
-        ...n,
-        data: {
-          ...n.data,
-          isSelected: selectedNodeId === n.id,
-          onNodeSelect,
-        },
-      })),
-    [nodes, selectedNodeId, onNodeSelect],
-  )
   return (
     <JourneyContext.Provider value={showJourney}>
       <div
         className={`relative h-full w-full overflow-hidden bg-[#FAFAFA] ${isPanning ? "rf-panning" : ""}`}
       >
         <ReactFlow
-          nodes={displayNodes}
+          nodes={nodes}
           onNodesChange={onNodesChange}
           edges={initialEdges}
           nodeTypes={nodeTypes}
@@ -447,7 +421,6 @@ export function Canvas({
           className="h-full w-full bg-[#FAFAFA]"
           onMoveStart={() => setIsPanning(true)}
           onMoveEnd={() => setIsPanning(false)}
-          onPaneClick={onPaneClick}
           panOnDrag={true}
           panOnScroll={true}
           zoomOnScroll={true}
@@ -490,10 +463,7 @@ export function Canvas({
               boxShadow: "0 1px 3px rgba(15, 15, 15, 0.04)",
             }}
           />
-          <ZoomControls
-            panelCollapsed={panelCollapsed}
-            onTogglePanel={onTogglePanel}
-          />
+          <ZoomControls />
         </ReactFlow>
       </div>
     </JourneyContext.Provider>
