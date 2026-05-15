@@ -15,7 +15,13 @@ function App() {
       />
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <BotHeader showJourney={showJourney} onJourneyChange={setShowJourney} />
-        <AnalyticsStrip />
+        <div
+          className={`overflow-hidden transition-[max-height,opacity] duration-200 ease-out ${
+            showJourney ? "max-h-9 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <AnalyticsStrip />
+        </div>
         <main className="relative flex-1 overflow-hidden">
           <div className="absolute inset-y-0 left-0 w-80">
             <NodePanel />

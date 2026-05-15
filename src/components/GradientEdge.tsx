@@ -10,6 +10,8 @@ export interface GradientEdgeData extends Record<string, unknown> {
   sourceColor: string
   targetColor: string
   label?: string
+  /** Default blue; use `amber` for return / alternate-path pills */
+  labelTone?: "blue" | "amber"
 }
 
 export type AppGradientEdge = Edge<GradientEdgeData, "gradient">
@@ -66,7 +68,7 @@ export function GradientEdge({
               position: "absolute",
               transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
             }}
-            className="pointer-events-none whitespace-nowrap rounded-full bg-blue-500 px-1.5 py-1 font-mono text-[10px] font-semibold text-white"
+            className={`pointer-events-none whitespace-nowrap rounded-full px-1.5 py-1 font-mono text-[10px] font-semibold text-white ${data.labelTone === "amber" ? "bg-amber-500" : "bg-blue-500"}`}
           >
             {data.label}
           </div>

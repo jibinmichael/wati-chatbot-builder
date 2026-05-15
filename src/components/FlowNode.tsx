@@ -93,6 +93,8 @@ export interface FlowNodeData extends Record<string, unknown> {
   type: string
   body: string
   views: number
+  /** Muted line below views (e.g. return-path note) */
+  viewsFootnote?: string
   isStart?: boolean
   isEnd?: boolean
 }
@@ -138,11 +140,18 @@ export function FlowNode({ data }: NodeProps<AppFlowNode>) {
       </div>
 
       {showJourney ? (
-        <div className="flex items-baseline gap-1.5 px-3.5 pb-3.5">
-          <span className="text-[11px] font-mono font-semibold text-slate-900">
-            {data.views.toLocaleString()}
-          </span>
-          <span className="text-[10px] font-medium text-slate-600">views</span>
+        <div className="px-3.5 pb-3.5">
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-[11px] font-mono font-semibold text-slate-900">
+              {data.views.toLocaleString()}
+            </span>
+            <span className="text-[10px] font-medium text-slate-600">views</span>
+          </div>
+          {data.viewsFootnote ? (
+            <p className="mt-1 text-[9px] leading-snug text-slate-400">
+              {data.viewsFootnote}
+            </p>
+          ) : null}
         </div>
       ) : null}
 

@@ -132,7 +132,12 @@ const initialNodes: AppFlowNode[] = [
     id: "s1",
     type: "flowNode",
     position: { x: 1210, y: 600 },
-    data: { type: "webhook", body: "Check open tickets", views: 4480 },
+    data: {
+      type: "webhook",
+      body: "Check open tickets",
+      views: 4480,
+      viewsFootnote: "The number includes users who have returned to this node.",
+    },
   },
   {
     id: "s2",
@@ -341,6 +346,18 @@ const initialEdges: Edge[] = [
     target: "end-status",
     type: "gradient",
     data: { sourceColor: NC.delay, targetColor: NC.end },
+  },
+  {
+    id: "ent1-s1",
+    source: "nt1",
+    target: "s1",
+    type: "gradient",
+    data: {
+      sourceColor: NC.question,
+      targetColor: NC.webhook,
+      label: "Returned 15%",
+      labelTone: "amber",
+    },
   },
   {
     id: "ent1-nt2",
