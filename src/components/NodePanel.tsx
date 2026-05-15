@@ -10,7 +10,6 @@ import {
   Tag,
   Users,
   Webhook,
-  Zap,
 } from "lucide-react"
 
 type Channel = "whatsapp" | "instagram" | "messenger"
@@ -31,7 +30,6 @@ const categories = [
       { id: "update", label: "Update attribute", icon: Edit3, bg: "bg-teal-500" },
       { id: "tags", label: "Set tags", icon: Tag, bg: "bg-cyan-500" },
       { id: "delay", label: "Time delay", icon: Clock, bg: "bg-sky-500" },
-      { id: "trigger", label: "Trigger chatbot", icon: Zap, bg: "bg-purple-500" },
       { id: "assign", label: "Assign team", icon: Users, bg: "bg-purple-500" },
     ],
   },
@@ -54,7 +52,7 @@ export function NodePanel() {
   const [channel, setChannel] = useState<Channel>("whatsapp")
 
   return (
-    <aside className="flex h-full min-h-0 w-80 flex-col border-r border-slate-200">
+    <aside className="flex h-full min-h-0 w-80 flex-col border-r border-[#FDFDFD] shadow-[3px_0_20px_-6px_rgba(15,15,15,0.05)]">
       <div className="p-4">
         <div className="flex h-8 flex-row gap-1 rounded-md bg-slate-100 p-1">
           {channels.map((c) => (

@@ -31,6 +31,8 @@ export function GradientEdge({
     targetX,
     targetY,
     targetPosition,
+    borderRadius: 16,
+    offset: 24,
   })
 
   const gradientId = `gradient-${id}`
@@ -64,7 +66,7 @@ export function GradientEdge({
               position: "absolute",
               transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
             }}
-            className="pointer-events-none rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-medium text-slate-900 shadow-sm"
+            className="pointer-events-none whitespace-nowrap rounded-full bg-blue-500 px-1.5 py-1 font-mono text-[10px] font-semibold text-white"
           >
             {data.label}
           </div>

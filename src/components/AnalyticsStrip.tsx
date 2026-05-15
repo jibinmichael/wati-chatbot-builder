@@ -15,14 +15,7 @@ function RateBar({ width, colorClass }: { width: string; colorClass: string }) {
 export function AnalyticsStrip() {
   return (
     <div className="flex h-9 w-full flex-row items-stretch bg-white">
-      <div className="flex flex-1 flex-row items-center gap-2 pl-6 pr-4">
-        <span className="text-xs font-medium text-slate-500">Sessions</span>
-        <span className="text-xs font-mono font-semibold text-slate-900">
-          12,847
-        </span>
-      </div>
-
-      <div className={columnClass}>
+      <div className={`${columnClass} pl-6`}>
         <span className="text-xs font-medium text-slate-500">Completion</span>
         <span className="text-xs font-mono font-semibold text-slate-900">
           71.9%
