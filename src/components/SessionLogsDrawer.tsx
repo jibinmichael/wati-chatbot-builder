@@ -2,6 +2,7 @@ import { useState } from "react"
 import {
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
   Search,
   X,
 } from "lucide-react"
@@ -22,30 +23,48 @@ const PAGE_SIZE = 25
 const selectTriggerClass =
   "h-7 gap-1 border-slate-200 text-[11px] [&_svg]:size-3 [&_svg]:text-slate-500"
 
-function statusDotClass(status: SessionStatus): string {
+function statusPill(
+  status: SessionStatus,
+): { label: string; pillClass: string } {
   switch (status) {
     case "completed":
-      return "bg-emerald-500"
+      return { label: "Completed", pillClass: "bg-emerald-50 text-emerald-700" }
     case "dropoff":
-      return "bg-red-500"
+      return { label: "Drop-off", pillClass: "bg-red-50 text-red-700" }
     case "reassigned":
-      return "bg-amber-500"
+      return { label: "Reassigned", pillClass: "bg-amber-50 text-amber-700" }
     case "in_progress":
-      return "bg-blue-500"
+      return { label: "In Progress", pillClass: "bg-blue-50 text-blue-700" }
     default:
-      return "bg-slate-400"
+      return { label: "", pillClass: "bg-slate-50 text-slate-700" }
   }
 }
 
-function formatRelativeTime(iso: string): string {
+/** Under 24h: Nh ago; 1–6d: Nd ago; 7d+: Nw ago */
+function formatSessionStartedRelative(iso: string): string {
   const ms = Date.now() - new Date(iso).getTime()
   const mins = Math.floor(ms / 60000)
-  if (mins < 1) return "0m ago"
-  if (mins < 60) return `${mins}m ago`
   const hrs = Math.floor(mins / 60)
-  if (hrs < 24) return `${hrs}h ago`
+  if (hrs < 24) {
+    if (mins < 1) return "0h ago"
+    return `${Math.max(1, hrs)}h ago`
+  }
   const days = Math.floor(hrs / 24)
-  return `${days}d ago`
+  if (days <= 6) {
+    return `${days}d ago`
+  }
+  const weeks = Math.floor(days / 7)
+  return `${Math.max(1, weeks)}w ago`
+}
+
+function formatAbsoluteTimestamp(iso: string): string {
+  return new Date(iso).toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })
 }
 
 export function SessionLogsDrawer({
@@ -182,57 +201,85 @@ export function SessionLogsDrawer({
           ) : (
             <>
               <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-2">
-                <div className="w-1.5 shrink-0" aria-hidden />
-                <span className="w-40 shrink-0 text-[9px] font-medium tracking-wider text-slate-500 uppercase">
+                <span className="w-24 shrink-0 text-[9px] font-medium tracking-wider text-slate-500 uppercase">
+                  Status
+                </span>
+                <span className="w-36 shrink-0 text-[9px] font-medium tracking-wider text-slate-500 uppercase">
                   Contact
                 </span>
                 <span className="min-w-0 flex-1 text-[9px] font-medium tracking-wider text-slate-500 uppercase">
                   Last node
                 </span>
-                <span className="w-16 shrink-0 text-[9px] font-medium tracking-wider text-slate-500 uppercase">
+                <span className="w-24 shrink-0 text-[9px] font-medium tracking-wider text-slate-500 uppercase">
                   Started
                 </span>
                 <span className="w-8 shrink-0 text-right text-[9px] font-medium tracking-wider text-slate-500 uppercase">
                   Nodes
                 </span>
+                <div className="w-4 shrink-0" aria-hidden />
               </div>
-              {pageRows.map((session) => (
-                <button
-                  key={session.id}
-                  type="button"
-                  className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left hover:bg-slate-50"
-                  onClick={() =>
-                    console.log("open in inbox", session.conversationId)
-                  }
-                >
-                  <span
-                    className={cn(
-                      "h-1.5 w-1.5 shrink-0 rounded-full",
-                      statusDotClass(session.status),
-                    )}
-                    aria-hidden
-                  />
-                  <div className="w-40 shrink-0">
-                    <p className="truncate text-xs font-medium text-slate-900">
-                      {session.contactName}
+              {pageRows.map((session) => {
+                const pill = statusPill(session.status)
+                return (
+                  <button
+                    key={session.id}
+                    type="button"
+                    className="group flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left hover:bg-slate-50"
+                    onClick={() =>
+                      window.open(
+                        `https://app.wati.io/teamInbox/${session.conversationId}`,
+                        "_blank",
+                        "noopener,noreferrer",
+                      )
+                    }
+                  >
+                    <div className="w-24 shrink-0">
+                      <span
+                        className={cn(
+                          "inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-medium whitespace-nowrap",
+                          pill.pillClass,
+                        )}
+                      >
+                        {pill.label}
+                      </span>
+                    </div>
+                    <div className="w-36 shrink-0">
+                      <p className="truncate text-xs font-medium text-slate-900">
+                        {session.contactName}
+                      </p>
+                      <p className="font-mono text-[10px] text-slate-500">
+                        {session.phone}
+                      </p>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[11px] text-slate-700">
+                        {session.lastNodeBody}
+                      </p>
+                    </div>
+                    <div className="flex w-24 shrink-0 flex-col">
+                      <span className="text-[11px] text-slate-700">
+                        {formatSessionStartedRelative(session.sessionStart)}
+                      </span>
+                      <span className="font-mono text-[10px] text-slate-500">
+                        {formatAbsoluteTimestamp(session.sessionStart)}
+                      </span>
+                    </div>
+                    <p className="w-8 shrink-0 text-right font-mono text-[11px] font-semibold text-slate-900">
+                      {session.nodesTraversed}
                     </p>
-                    <p className="font-mono text-[10px] text-slate-500">
-                      {session.phone}
-                    </p>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-[11px] text-slate-700">
-                      {session.lastNodeBody}
-                    </p>
-                  </div>
-                  <p className="w-16 shrink-0 font-mono text-[10px] text-slate-500">
-                    {formatRelativeTime(session.sessionStart)}
-                  </p>
-                  <p className="w-8 shrink-0 text-right font-mono text-[11px] font-semibold text-slate-900">
-                    {session.nodesTraversed}
-                  </p>
-                </button>
-              ))}
+                    <span
+                      className="flex w-4 shrink-0 justify-end"
+                      aria-hidden
+                    >
+                      <ExternalLink
+                        size={12}
+                        className="text-slate-300 group-hover:text-slate-500"
+                        strokeWidth={2}
+                      />
+                    </span>
+                  </button>
+                )
+              })}
             </>
           )}
         </div>
