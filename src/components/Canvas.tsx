@@ -361,7 +361,7 @@ const initialEdges: Edge[] = [
     data: {
       sourceColor: NC.question,
       targetColor: NC.webhook,
-      label: "Returned 15%",
+      label: "15% returned back",
       labelTone: "amber",
     },
   },
