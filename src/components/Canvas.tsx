@@ -176,7 +176,12 @@ const initialNodes: AppFlowNode[] = [
     id: "nt1",
     type: "flowNode",
     position: { x: 1790, y: 700 },
-    data: { type: "question", body: "What's the issue?", views: 2847 },
+    data: {
+      type: "question",
+      body: "What's the issue?",
+      views: 2847,
+      extraReturnHandle: true,
+    },
   },
   {
     id: "nt2",
@@ -351,6 +356,7 @@ const initialEdges: Edge[] = [
     id: "ent1-s1",
     source: "nt1",
     target: "s1",
+    sourceHandle: "return",
     type: "gradient",
     data: {
       sourceColor: NC.question,
@@ -363,6 +369,7 @@ const initialEdges: Edge[] = [
     id: "ent1-nt2",
     source: "nt1",
     target: "nt2",
+    sourceHandle: "forward",
     type: "gradient",
     data: { sourceColor: NC.question, targetColor: NC.webhook },
   },

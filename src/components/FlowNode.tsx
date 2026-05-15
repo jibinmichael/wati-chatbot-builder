@@ -97,6 +97,8 @@ export interface FlowNodeData extends Record<string, unknown> {
   viewsFootnote?: string
   isStart?: boolean
   isEnd?: boolean
+  /** Second source on bottom (e.g. loop-back) — right handle becomes id `forward` */
+  extraReturnHandle?: boolean
 }
 
 export type AppFlowNode = Node<FlowNodeData, "flowNode">
@@ -156,7 +158,22 @@ export function FlowNode({ data }: NodeProps<AppFlowNode>) {
       ) : null}
 
       {!data.isEnd && (
-        <Handle type="source" position={Position.Right} style={hiddenHandle} />
+        <>
+          <Handle
+            id={data.extraReturnHandle ? "forward" : undefined}
+            type="source"
+            position={Position.Right}
+            style={hiddenHandle}
+          />
+          {data.extraReturnHandle ? (
+            <Handle
+              id="return"
+              type="source"
+              position={Position.Bottom}
+              style={hiddenHandle}
+            />
+          ) : null}
+        </>
       )}
     </div>
   )
