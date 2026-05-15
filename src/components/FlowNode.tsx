@@ -142,7 +142,7 @@ export function FlowNode({ data }: NodeProps<AppFlowNode>) {
           <span className="text-[11px] font-mono font-semibold text-slate-900">
             {data.views.toLocaleString()}
           </span>
-          <span className="text-[10px] text-slate-400">views</span>
+          <span className="text-[10px] font-medium text-slate-600">views</span>
         </div>
       ) : null}
 

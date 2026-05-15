@@ -6,7 +6,6 @@ import {
   type EdgeTypes,
   type NodeTypes,
 } from "@xyflow/react"
-import { EdgeSplitJunctions } from "./EdgeSplitJunctions"
 import { FlowNode, type AppFlowNode, JourneyContext } from "./FlowNode"
 import { GradientEdge } from "./GradientEdge"
 
@@ -371,7 +370,7 @@ export function Canvas({ showJourney }: { showJourney: boolean }) {
 
   return (
     <JourneyContext.Provider value={showJourney}>
-      <div className="flex-1 bg-white h-full relative overflow-hidden min-w-0">
+      <div className="relative h-full min-w-0 flex-1 overflow-hidden bg-[#F7F7F7]">
         <ReactFlow
           nodes={nodes}
           onNodesChange={onNodesChange}
@@ -383,7 +382,7 @@ export function Canvas({ showJourney }: { showJourney: boolean }) {
           minZoom={0.35}
           maxZoom={1}
           proOptions={{ hideAttribution: true }}
-          className="h-full w-full"
+          className="h-full w-full bg-[#F7F7F7]"
           panOnDrag={true}
           panOnScroll={true}
           zoomOnScroll={true}
@@ -399,7 +398,6 @@ export function Canvas({ showJourney }: { showJourney: boolean }) {
             showFitView={false}
             showInteractive={false}
           />
-          <EdgeSplitJunctions />
         </ReactFlow>
       </div>
     </JourneyContext.Provider>
