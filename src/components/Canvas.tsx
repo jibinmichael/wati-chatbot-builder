@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import {
+  MiniMap,
   ReactFlow,
   useNodesState,
   type Edge,
@@ -392,29 +393,61 @@ const initialEdges: Edge[] = [
   },
 ]
 
-export function Canvas({ showJourney }: { showJourney: boolean }) {
+export function Canvas({
+  showJourney,
+  panelCollapsed,
+  onTogglePanel,
+  selectedNodeId,
+  onNodeSelect,
+  onPaneClick,
+}: {
+  showJourney: boolean
+  panelCollapsed: boolean
+  onTogglePanel: () => void
+  selectedNodeId: string | null
+  onNodeSelect: (p: { id: string; body: string; type: string }) => void
+  onPaneClick: () => void
+}) {
   const [nodes, , onNodesChange] = useNodesState(initialNodes)
   const [isPanning, setIsPanning] = useState(false)
 
+  const displayNodes = useMemo(
+    () =>
+      nodes.map((n) => ({
+        ...n,
+        data: {
+          ...n.data,
+          isSelected: selectedNodeId === n.id,
+          onNodeSelect,
+        },
+      })),
+    [nodes, selectedNodeId, onNodeSelect],
+  )
   return (
     <JourneyContext.Provider value={showJourney}>
       <div
         className={`relative h-full w-full overflow-hidden bg-[#FAFAFA] ${isPanning ? "rf-panning" : ""}`}
       >
         <ReactFlow
-          nodes={nodes}
+          nodes={displayNodes}
           onNodesChange={onNodesChange}
           edges={initialEdges}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
-          fitView
-          fitViewOptions={{ padding: 0.05, minZoom: 0.35, maxZoom: 1 }}
+          onInit={(instance) =>
+            instance.fitView({
+              padding: 0.05,
+              minZoom: 0.35,
+              maxZoom: 1,
+            })
+          }
           minZoom={0.35}
           maxZoom={1}
           proOptions={{ hideAttribution: true }}
           className="h-full w-full bg-[#FAFAFA]"
           onMoveStart={() => setIsPanning(true)}
           onMoveEnd={() => setIsPanning(false)}
+          onPaneClick={onPaneClick}
           panOnDrag={true}
           panOnScroll={true}
           zoomOnScroll={true}
@@ -424,7 +457,43 @@ export function Canvas({ showJourney }: { showJourney: boolean }) {
           nodesConnectable={false}
           elementsSelectable={false}
         >
-          <ZoomControls />
+          <MiniMap
+            position="bottom-right"
+            pannable={false}
+            zoomable={false}
+            className="!m-4 !border-0 !shadow-none"
+            nodeColor={(node) => {
+              const colorMap: Record<string, string> = {
+                message: "#fecaca",
+                question: "#fed7aa",
+                condition: "#ddd6fe",
+                subscribe: "#bfdbfe",
+                attribute: "#99f6e4",
+                tags: "#a5f3fc",
+                assign: "#e9d5ff",
+                webhook: "#fef08a",
+                spreadsheet: "#bbf7d0",
+                end: "#e2e8f0",
+                delay: "#bae6fd",
+              }
+              const t = node.data?.type as string | undefined
+              return (t && colorMap[t]) || "#e2e8f0"
+            }}
+            nodeBorderRadius={3}
+            nodeStrokeWidth={0}
+            maskColor="rgba(248, 250, 252, 0.6)"
+            style={{
+              border: "none",
+              borderRadius: "8px",
+              width: 160,
+              height: 100,
+              boxShadow: "0 1px 3px rgba(15, 15, 15, 0.04)",
+            }}
+          />
+          <ZoomControls
+            panelCollapsed={panelCollapsed}
+            onTogglePanel={onTogglePanel}
+          />
         </ReactFlow>
       </div>
     </JourneyContext.Provider>
