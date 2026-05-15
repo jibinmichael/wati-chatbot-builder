@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { ChevronDown, ChevronLeft, Clock, Play, ScrollText } from "lucide-react"
+import { ChevronDown, ChevronLeft, Clock, FileText, Play } from "lucide-react"
 
 const VERSION_OPTIONS = [
   {
@@ -188,7 +188,7 @@ export function BotHeader({
           onClick={onOpenLogs}
           className="inline-flex h-6 shrink-0 items-center gap-1 rounded-lg border border-transparent bg-transparent px-3 text-xs font-medium text-slate-600 hover:bg-slate-100"
         >
-          <ScrollText size={12} strokeWidth={2.25} />
+          <FileText size={12} strokeWidth={2.25} />
           Logs
         </button>
         <button

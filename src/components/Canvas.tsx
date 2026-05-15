@@ -138,7 +138,6 @@ const initialNodes: AppFlowNode[] = [
       type: "webhook",
       body: "Check open tickets",
       views: 4480,
-      viewsFootnote: "The number includes users who have returned to this node.",
       extraBottomTarget: true,
     },
   },
