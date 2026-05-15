@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
-import { MOCK_SESSIONS, type Session, type SessionStatus } from "@/data/sessions"
+import { MOCK_SESSIONS, type SessionStatus } from "@/data/sessions"
 
 const PAGE_SIZE = 25
 
@@ -35,16 +35,6 @@ function statusDotClass(status: SessionStatus): string {
     default:
       return "bg-slate-400"
   }
-}
-
-function lastNodeTypeSuffix(session: Session): string {
-  if (session.lastNodeType === "template" && session.templateName) {
-    return `Template — ${session.templateName}`
-  }
-  if (session.lastNodeType === "catalog" && session.catalogName) {
-    return `Catalog — ${session.catalogName}`
-  }
-  return "Message"
 }
 
 function formatRelativeTime(iso: string): string {
@@ -190,46 +180,60 @@ export function SessionLogsDrawer({
               </p>
             </div>
           ) : (
-            pageRows.map((session) => (
-              <button
-                key={session.id}
-                type="button"
-                className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left hover:bg-slate-50"
-                onClick={() =>
-                  console.log("open in inbox", session.conversationId)
-                }
-              >
-                <span
-                  className={cn(
-                    "h-1.5 w-1.5 shrink-0 rounded-full",
-                    statusDotClass(session.status),
-                  )}
-                  aria-hidden
-                />
-                <div className="w-40 shrink-0">
-                  <p className="truncate text-xs font-medium text-slate-900">
-                    {session.contactName}
+            <>
+              <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-2">
+                <div className="w-1.5 shrink-0" aria-hidden />
+                <span className="w-40 shrink-0 text-[9px] font-medium tracking-wider text-slate-500 uppercase">
+                  Contact
+                </span>
+                <span className="min-w-0 flex-1 text-[9px] font-medium tracking-wider text-slate-500 uppercase">
+                  Last node
+                </span>
+                <span className="w-16 shrink-0 text-[9px] font-medium tracking-wider text-slate-500 uppercase">
+                  Started
+                </span>
+                <span className="w-8 shrink-0 text-right text-[9px] font-medium tracking-wider text-slate-500 uppercase">
+                  Nodes
+                </span>
+              </div>
+              {pageRows.map((session) => (
+                <button
+                  key={session.id}
+                  type="button"
+                  className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left hover:bg-slate-50"
+                  onClick={() =>
+                    console.log("open in inbox", session.conversationId)
+                  }
+                >
+                  <span
+                    className={cn(
+                      "h-1.5 w-1.5 shrink-0 rounded-full",
+                      statusDotClass(session.status),
+                    )}
+                    aria-hidden
+                  />
+                  <div className="w-40 shrink-0">
+                    <p className="truncate text-xs font-medium text-slate-900">
+                      {session.contactName}
+                    </p>
+                    <p className="font-mono text-[10px] text-slate-500">
+                      {session.phone}
+                    </p>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-[11px] text-slate-700">
+                      {session.lastNodeBody}
+                    </p>
+                  </div>
+                  <p className="w-16 shrink-0 font-mono text-[10px] text-slate-500">
+                    {formatRelativeTime(session.sessionStart)}
                   </p>
-                  <p className="font-mono text-[10px] text-slate-500">
-                    {session.phone}
+                  <p className="w-8 shrink-0 text-right font-mono text-[11px] font-semibold text-slate-900">
+                    {session.nodesTraversed}
                   </p>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-[11px] text-slate-700">
-                    {session.lastNodeBody}
-                  </p>
-                  <p className="text-[10px] text-slate-400">
-                    {lastNodeTypeSuffix(session)}
-                  </p>
-                </div>
-                <p className="w-16 shrink-0 font-mono text-[10px] text-slate-500">
-                  {formatRelativeTime(session.sessionStart)}
-                </p>
-                <p className="w-8 shrink-0 text-right font-mono text-[11px] font-semibold text-slate-900">
-                  {session.nodesTraversed}
-                </p>
-              </button>
-            ))
+                </button>
+              ))}
+            </>
           )}
         </div>
 
