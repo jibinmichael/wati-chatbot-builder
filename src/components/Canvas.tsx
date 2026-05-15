@@ -1,5 +1,4 @@
 import {
-  Controls,
   ReactFlow,
   useNodesState,
   type Edge,
@@ -7,6 +6,7 @@ import {
   type NodeTypes,
 } from "@xyflow/react"
 import { FlowNode, type AppFlowNode, JourneyContext } from "./FlowNode"
+import { ZoomControls } from "./ZoomControls"
 import { GradientEdge } from "./GradientEdge"
 
 const nodeTypes = { flowNode: FlowNode } satisfies NodeTypes
@@ -370,7 +370,7 @@ export function Canvas({ showJourney }: { showJourney: boolean }) {
 
   return (
     <JourneyContext.Provider value={showJourney}>
-      <div className="relative h-full min-w-0 flex-1 overflow-hidden bg-[#F7F7F7]">
+      <div className="relative h-full w-full overflow-hidden bg-[#FAFAFA]">
         <ReactFlow
           nodes={nodes}
           onNodesChange={onNodesChange}
@@ -382,7 +382,7 @@ export function Canvas({ showJourney }: { showJourney: boolean }) {
           minZoom={0.35}
           maxZoom={1}
           proOptions={{ hideAttribution: true }}
-          className="h-full w-full bg-[#F7F7F7]"
+          className="h-full w-full bg-[#FAFAFA]"
           panOnDrag={true}
           panOnScroll={true}
           zoomOnScroll={true}
@@ -392,12 +392,7 @@ export function Canvas({ showJourney }: { showJourney: boolean }) {
           nodesConnectable={false}
           elementsSelectable={false}
         >
-          <Controls
-            position="bottom-left"
-            orientation="horizontal"
-            showFitView={false}
-            showInteractive={false}
-          />
+          <ZoomControls />
         </ReactFlow>
       </div>
     </JourneyContext.Provider>

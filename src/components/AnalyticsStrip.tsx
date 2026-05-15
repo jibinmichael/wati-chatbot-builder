@@ -16,6 +16,13 @@ export function AnalyticsStrip() {
   return (
     <div className="flex h-9 w-full flex-row items-stretch bg-white">
       <div className={`${columnClass} pl-6`}>
+        <span className="text-xs font-medium text-slate-500">Sessions</span>
+        <span className="text-xs font-mono font-semibold text-slate-900">
+          12,847
+        </span>
+      </div>
+
+      <div className={columnClass}>
         <span className="text-xs font-medium text-slate-500">Completion</span>
         <span className="text-xs font-mono font-semibold text-slate-900">
           71.9%
@@ -39,13 +46,24 @@ export function AnalyticsStrip() {
         <RateBar width="14.4%" colorClass="bg-amber-500" />
       </div>
 
+      <div
+        className={columnClass}
+        title="Median time from first message to end-state. Excludes sessions reassigned to humans."
+      >
+        <span className="text-[10px] text-slate-500">Avg Resolution time</span>
+        <span className="text-[11px] font-mono font-semibold text-slate-900">
+          2.4
+        </span>
+        <span className="text-[10px] text-slate-500">min</span>
+      </div>
+
       <div className={columnClass}>
         <span className="text-xs font-medium text-slate-500">Last 7 days</span>
         <div className="flex shrink-0 flex-row items-center gap-0.5">
           <div className="h-3 w-3 bg-emerald-300" />
           <div className="h-3 w-3 bg-emerald-400" />
           <div className="h-3 w-3 bg-emerald-200" />
-          <div className="w-3 h-3 bg-emerald-500" />
+          <div className="h-3 w-3 bg-emerald-500" />
           <div className="h-3 w-3 bg-emerald-300" />
           <div className="h-3 w-3 bg-emerald-600" />
           <div className="h-3 w-3 bg-emerald-400" />

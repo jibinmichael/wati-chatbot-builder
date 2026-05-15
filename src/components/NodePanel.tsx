@@ -52,7 +52,7 @@ export function NodePanel() {
   const [channel, setChannel] = useState<Channel>("whatsapp")
 
   return (
-    <aside className="flex h-full min-h-0 w-80 flex-col border-r border-[#FDFDFD] shadow-[3px_0_20px_-6px_rgba(15,15,15,0.05)]">
+    <aside className="flex h-full min-h-0 w-80 flex-col border-r border-[#F5F5F5] shadow-[3px_0_0_0_#FAFAFA,3px_0_20px_-6px_rgba(15,15,15,0.03)]">
       <div className="p-4">
         <div className="flex h-8 flex-row gap-1 rounded-md bg-slate-100 p-1">
           {channels.map((c) => (
