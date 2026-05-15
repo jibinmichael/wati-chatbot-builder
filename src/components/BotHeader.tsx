@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { ChevronDown, MoveLeft, Play } from "lucide-react"
+import { ChevronDown, ChevronLeft, Play } from "lucide-react"
 
 export function BotHeader() {
   const [name, setName] = useState("Lead qualification bot 2026")
@@ -33,13 +33,14 @@ export function BotHeader() {
   }
 
   return (
-    <header className="flex h-10 w-full items-center gap-3 border-b border-slate-200 bg-white px-6">
-      <span
-        className="inline-flex shrink-0 cursor-pointer text-slate-500 transition-colors hover:text-slate-700"
-        aria-hidden
+    <header className="flex h-10 w-full items-center gap-3 bg-white px-6">
+      <button
+        type="button"
+        className="inline-flex h-6 shrink-0 items-center gap-1 rounded-full bg-white px-2 text-xs text-slate-600 hover:bg-slate-50"
       >
-        <MoveLeft className="h-3.5 w-3.5" strokeWidth={2} />
-      </span>
+        <ChevronLeft size={12} />
+        Exit
+      </button>
       <div className="flex max-w-md min-w-0 shrink items-center gap-2">
         <input
           type="text"
@@ -57,7 +58,7 @@ export function BotHeader() {
       <div className="flex shrink-0 items-center gap-2">
         <button
           type="button"
-          className="inline-flex h-6 items-center gap-1 rounded-full border border-slate-200 bg-white px-2 text-xs text-slate-600 hover:bg-slate-50"
+          className="inline-flex h-6 items-center gap-1 rounded-full bg-white px-2 text-xs text-slate-600 hover:bg-slate-50"
         >
           <Play size={12} />
           <ChevronDown size={12} />
