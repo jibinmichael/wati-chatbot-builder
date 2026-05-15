@@ -36,7 +36,7 @@ export function BotHeader() {
     <header className="flex h-10 w-full items-center gap-3 bg-white px-6">
       <button
         type="button"
-        className="inline-flex h-6 shrink-0 items-center gap-1 rounded-full bg-white px-2 text-xs text-slate-600 hover:bg-slate-50"
+        className="inline-flex h-6 shrink-0 items-center gap-1 rounded-full border border-slate-200 bg-white px-2 text-xs text-slate-600 hover:bg-slate-50"
       >
         <ChevronLeft size={12} />
         Exit
@@ -58,7 +58,7 @@ export function BotHeader() {
       <div className="flex shrink-0 items-center gap-2">
         <button
           type="button"
-          className="inline-flex h-6 items-center gap-1 rounded-full bg-white px-2 text-xs text-slate-600 hover:bg-slate-50"
+          className="inline-flex h-6 items-center gap-1 rounded-full border border-slate-200 bg-white px-2 text-xs text-slate-600 hover:bg-slate-50"
         >
           <Play size={12} />
           <ChevronDown size={12} />

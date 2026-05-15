@@ -1,20 +1,9 @@
-const lastSevenDaysHeights = [50, 75, 40, 90, 60, 100, 85] as const
-
 const columnClass =
-  "flex flex-1 flex-col justify-center px-5 py-1"
+  "flex flex-1 flex-row items-center gap-2 border-l border-slate-200 px-4"
 
-const labelClass = "mb-1 text-xs font-medium text-black/45"
-const valueClass = "text-xs font-mono font-semibold text-black"
-
-function RateBar({
-  width,
-  colorClass,
-}: {
-  width: string
-  colorClass: string
-}) {
+function RateBar({ width, colorClass }: { width: string; colorClass: string }) {
   return (
-    <div className="relative mt-2 h-1 w-20 rounded-full bg-black/10">
+    <div className="relative h-1 w-9 shrink-0 rounded-full bg-slate-200">
       <div
         className={`absolute inset-y-0 left-0 rounded-full ${colorClass}`}
         style={{ width }}
@@ -25,42 +14,50 @@ function RateBar({
 
 export function AnalyticsStrip() {
   return (
-    <section className="flex h-16 w-full flex-row items-stretch bg-white">
-      <div className="flex flex-1 flex-col justify-center px-5 py-1">
-        <p className={labelClass}>Sessions</p>
-        <p className={valueClass}>12,847</p>
+    <div className="flex h-7 w-full flex-row items-stretch border-b border-slate-200 bg-white">
+      <div className="flex flex-1 flex-row items-center gap-2 px-4">
+        <span className="text-xs font-medium text-slate-500">Sessions</span>
+        <span className="text-xs font-mono font-semibold text-slate-900">
+          12,847
+        </span>
       </div>
 
       <div className={columnClass}>
-        <p className={labelClass}>Completion rate</p>
-        <p className={valueClass}>71.9%</p>
+        <span className="text-xs font-medium text-slate-500">Completion</span>
+        <span className="text-xs font-mono font-semibold text-slate-900">
+          71.9%
+        </span>
         <RateBar width="71.9%" colorClass="bg-emerald-500" />
       </div>
 
       <div className={columnClass}>
-        <p className={labelClass}>Drop-offs</p>
-        <p className={valueClass}>1,769</p>
+        <span className="text-xs font-medium text-slate-500">Drop-offs</span>
+        <span className="text-xs font-mono font-semibold text-slate-900">
+          1,769
+        </span>
         <RateBar width="13.8%" colorClass="bg-red-500" />
       </div>
 
       <div className={columnClass}>
-        <p className={labelClass}>Reassignment rate</p>
-        <p className={valueClass}>14.4%</p>
+        <span className="text-xs font-medium text-slate-500">Reassign</span>
+        <span className="text-xs font-mono font-semibold text-slate-900">
+          14.4%
+        </span>
         <RateBar width="14.4%" colorClass="bg-amber-500" />
       </div>
 
-      <div className="flex flex-[1.5] flex-col justify-center px-5 py-1">
-        <p className="mb-2 text-xs font-medium text-black/45">Last 7 days</p>
-        <div className="flex h-7 w-32 flex-row items-end gap-1">
-          {lastSevenDaysHeights.map((pct, i) => (
-            <div
-              key={i}
-              className="w-3 rounded-sm bg-black/35"
-              style={{ height: `${pct}%` }}
-            />
-          ))}
+      <div className={columnClass}>
+        <span className="text-xs font-medium text-slate-500">Last 7 days</span>
+        <div className="flex shrink-0 flex-row items-center gap-0.5">
+          <div className="h-3 w-3 bg-emerald-300" />
+          <div className="h-3 w-3 bg-emerald-400" />
+          <div className="h-3 w-3 bg-emerald-200" />
+          <div className="w-3 h-3 bg-emerald-500" />
+          <div className="h-3 w-3 bg-emerald-300" />
+          <div className="h-3 w-3 bg-emerald-600" />
+          <div className="h-3 w-3 bg-emerald-400" />
         </div>
       </div>
-    </section>
+    </div>
   )
 }
