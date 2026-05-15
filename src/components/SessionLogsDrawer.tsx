@@ -176,7 +176,7 @@ export function SessionLogsDrawer({
           </div>
         </div>
 
-        <div className="shrink-0 border-b border-slate-100 px-4 py-1.5">
+        <div className="shrink-0 px-4 py-1.5">
           <p className="font-mono text-[10px] text-slate-500">
             {total} sessions
           </p>
@@ -194,7 +194,7 @@ export function SessionLogsDrawer({
               <button
                 key={session.id}
                 type="button"
-                className="flex w-full cursor-pointer items-center gap-3 border-b border-slate-100 px-4 py-2.5 text-left hover:bg-slate-50"
+                className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left hover:bg-slate-50"
                 onClick={() =>
                   console.log("open in inbox", session.conversationId)
                 }
@@ -233,7 +233,7 @@ export function SessionLogsDrawer({
           )}
         </div>
 
-        <div className="flex h-10 shrink-0 items-center justify-between border-t border-slate-200 px-4">
+        <div className="flex h-10 shrink-0 items-center justify-between px-4">
           <p className="font-mono text-[10px] text-slate-500">
             {total === 0
               ? "Showing 0 of 0"
