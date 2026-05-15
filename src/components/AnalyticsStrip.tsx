@@ -7,6 +7,9 @@ const stripGrid =
 const cellClass =
   "flex min-w-0 flex-row flex-nowrap items-center gap-1 whitespace-nowrap"
 
+const cellClassLast7 =
+  "flex min-w-0 flex-row flex-nowrap items-center gap-2 whitespace-nowrap"
+
 function RateBar({ width, colorClass }: { width: string; colorClass: string }) {
   return (
     <div className="relative h-1 w-8 shrink-0 rounded-full bg-slate-200">
@@ -89,7 +92,7 @@ export function AnalyticsStrip() {
         <StatPair value="2.4 min" percent="−8%" />
       </div>
 
-      <div className={cellClass}>
+      <div className={cellClassLast7}>
         <span className="shrink-0 text-[11px] font-medium text-slate-500">
           Last 7 days
         </span>
