@@ -99,6 +99,8 @@ export interface FlowNodeData extends Record<string, unknown> {
   isEnd?: boolean
   /** Second source on bottom (e.g. loop-back) — right handle becomes id `forward` */
   extraReturnHandle?: boolean
+  /** Extra target on bottom (e.g. return path from another node) */
+  extraBottomTarget?: boolean
 }
 
 export type AppFlowNode = Node<FlowNodeData, "flowNode">
@@ -122,7 +124,17 @@ export function FlowNode({ data }: NodeProps<AppFlowNode>) {
       style={{ borderColor: config.borderColor }}
     >
       {!data.isStart && (
-        <Handle type="target" position={Position.Left} style={hiddenHandle} />
+        <>
+          <Handle type="target" position={Position.Left} style={hiddenHandle} />
+          {data.extraBottomTarget ? (
+            <Handle
+              id="bottom"
+              type="target"
+              position={Position.Bottom}
+              style={hiddenHandle}
+            />
+          ) : null}
+        </>
       )}
 
       <div className="flex items-center gap-2 px-3.5 pb-2 pt-3.5">

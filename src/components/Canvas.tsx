@@ -138,6 +138,7 @@ const initialNodes: AppFlowNode[] = [
       body: "Check open tickets",
       views: 4480,
       viewsFootnote: "The number includes users who have returned to this node.",
+      extraBottomTarget: true,
     },
   },
   {
@@ -358,6 +359,7 @@ const initialEdges: Edge[] = [
     source: "nt1",
     target: "s1",
     sourceHandle: "return",
+    targetHandle: "bottom",
     type: "gradient",
     data: {
       sourceColor: NC.question,
