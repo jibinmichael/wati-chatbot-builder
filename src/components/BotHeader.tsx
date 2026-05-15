@@ -38,9 +38,11 @@ function versionTriggerLabel(
 export function BotHeader({
   showJourney,
   onJourneyChange,
+  onOpenLogs,
 }: {
   showJourney: boolean
   onJourneyChange: (v: boolean) => void
+  onOpenLogs: () => void
 }) {
   const [name, setName] = useState("Lead qualification bot 2026")
   const committedRef = useRef(name)
@@ -183,6 +185,7 @@ export function BotHeader({
         </div>
         <button
           type="button"
+          onClick={onOpenLogs}
           className="inline-flex h-6 shrink-0 items-center gap-1 rounded-lg border border-transparent bg-transparent px-3 text-xs font-medium text-slate-600 hover:bg-slate-100"
         >
           <ScrollText size={12} strokeWidth={2.25} />
