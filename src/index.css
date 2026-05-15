@@ -137,3 +137,13 @@
     font-optical-sizing: auto;
     }
 }
+
+/* React Flow: spring-like ease for wheel / programmatic viewport changes; drag uses .rf-panning to disable */
+.react-flow__viewport {
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.rf-panning .react-flow__viewport {
+  transition: none;
+}

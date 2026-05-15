@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
   ReactFlow,
   useNodesState,
@@ -391,10 +392,13 @@ const initialEdges: Edge[] = [
 
 export function Canvas({ showJourney }: { showJourney: boolean }) {
   const [nodes, , onNodesChange] = useNodesState(initialNodes)
+  const [isPanning, setIsPanning] = useState(false)
 
   return (
     <JourneyContext.Provider value={showJourney}>
-      <div className="relative h-full w-full overflow-hidden bg-[#FAFAFA]">
+      <div
+        className={`relative h-full w-full overflow-hidden bg-[#FAFAFA] ${isPanning ? "rf-panning" : ""}`}
+      >
         <ReactFlow
           nodes={nodes}
           onNodesChange={onNodesChange}
@@ -407,6 +411,8 @@ export function Canvas({ showJourney }: { showJourney: boolean }) {
           maxZoom={1}
           proOptions={{ hideAttribution: true }}
           className="h-full w-full bg-[#FAFAFA]"
+          onMoveStart={() => setIsPanning(true)}
+          onMoveEnd={() => setIsPanning(false)}
           panOnDrag={true}
           panOnScroll={true}
           zoomOnScroll={true}
