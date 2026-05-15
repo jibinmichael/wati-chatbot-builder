@@ -155,7 +155,7 @@ export function BotHeader({
           {versionOpen ? (
             <ul
               role="listbox"
-              className="absolute right-0 z-50 mt-1 w-64 rounded-lg border border-slate-200 bg-white py-0.5 shadow-md"
+              className="absolute right-0 z-50 mt-1 w-max rounded-lg border border-slate-200 bg-white py-0.5 shadow-md"
             >
               {VERSION_OPTIONS.map((opt) => (
                 <li key={opt.id} role="option" aria-selected={opt.id === versionId}>
